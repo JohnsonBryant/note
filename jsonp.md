@@ -5,4 +5,5 @@ server1.example.com的服务器沟通，而 HTML 的<script> 元素是一个例�
 ## 相关链接：
 	【原创】说说JSON和JSONP，也许你会豁然开朗，含jQuery用例   http://www.cnblogs.com/dowinning/archive/2012/04/19/json-jsonp-jquery.html
 	菜鸟教程jsonp解释：   http://www.runoob.com/json/json-jsonp.html
-	
+	阮一峰-浏览器同源政策及其规避方法   http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
+	阮一峰-跨域资源共享 CORS 详解    http://www.ruanyifeng.com/blog/2016/04/cors.html
