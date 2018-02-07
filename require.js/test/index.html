@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>个人简历</title>
+    <meta name="keywords" content="html,javascript,css,jquery,web前端开发">
+    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/fullPage.js/2.9.6/jquery.fullpage.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .demo {
+            min-height: 100vh;
+            max-width: 100vw;
+            text-align: center;
+        }
+
+        .demo:nth-child(1) {
+            background-color: aliceblue
+        }
+
+        .demo:nth-child(2) {
+            background-color: aquamarine
+        }
+
+        .demo:nth-child(3) {
+            background-color: bisque
+        }
+
+        .demo:nth-child(4) {
+            background-color: cornsilk
+        }
+    </style>
+    
+    
+</head>
+
+<body>
+
+    <div id="fullpage">
+        <div class="demo section">
+            <div class="slide">
+                <h1 class="animated bounceInLeft">杨文正</h1>
+                <p class="animated bounceInUp">前端开发工程师</p>
+                <p class="animated bounceInUp">
+                    <a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=opOblJSRk5qTkZHi09OMwc3P" style="text-decoration:none;">1966318133@qq.com</a>
+                </p>
+            </div>
+            <div class="slide"> 幻灯片1 </div>
+            <div class="slide"> 幻灯片1 </div>
+            <div class="slide"> 幻灯片1 </div>
+
+        </div>
+        <div class="demo section">
+            <h1 class="">demo2</h1>
+        </div>
+        <div class="demo section">
+            <h1 class="">demo3</h1>
+        </div>
+        <div class="demo section">
+            <h1 class="">demo4</h1>
+        </div>
+        <ul id="navBar">
+            <li data-menuanchor="firstPage" class="active">
+                <a href="#firstPage">第一节</a>
+            </li>
+            <li data-menuanchor="secondPage">
+                <a href="#secondPage">第二节</a>
+            </li>
+            <li data-menuanchor="thirdPage">
+                <a href="#thirdPage">第三节</a>
+            </li>
+            <li data-menuanchor="fourthPage">
+                <a href="#fourthPage">第四节</a>
+            </li>
+        </ul>
+    </div>
+    
+<script data-main="js/entry" src="js/require.js"></script>
+<!-- <script src="js/entry.js"></script> -->
+
+</body>
+
+</html>
