@@ -1,7 +1,25 @@
 # git 学习笔记
 
 ## 1、命令
-#### 分支 ####
+
+### 配置 ###
+
+查看
+
+```git
+git config --global --list    查看当前用户（global）配置
+git config --local --list    查看当前仓库config
+git config --system --list    查看系统config
+```
+
+设置
+
+```git
+git config --global user.name "userName"
+git config --global user.eamil user@mail.com
+```
+
+### 分支 ###
 **1、相关命令**
 ```git
 	git branch    查看当前分支，会列出所有分支，并在当前分支前标*
