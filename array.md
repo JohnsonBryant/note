@@ -49,7 +49,11 @@ Array.prototype.myUnique = function() {
 
 > 原理：对象的不存在的属性，对应值为undefined，将数组中的项添加为对象属性，通过对象属性，对数组项进行筛除，从而创造出新的不含重复值的数组
 
+优点：执行速度快；  缺点：占用内存较多
+**注意** 存在缺陷，判断是否为js对象的键时，会自动对传入的键执行toStirng()，不同的键可能会被误认为一样，如 obj[1] 和 obj["1"]
+
 ```javascript
+//无法判断 1 和 "1" 的区别，会认为是重复项，忽略后出现的
 Array.prototype.myUnique = function() {
     var arr = this, i, j, len = arr.length, obj = {}, res = [];
     for (i = 0; i < len; i++) {
@@ -62,9 +66,30 @@ Array.prototype.myUnique = function() {
 }
 ```
 
+```javascript
+//处理了js对象在判断键时，会自动对传入的键进行toString()操作，避免出现错误判断 1 和 "1" 的问题
+Array.prototype.myUnique = function() {
+    var obj = {}, res = [], len = this.length, type, val;
+    for (var i = 0; i < len; i++){
+        val = this[i];
+        type = typeof this[i];
+        if( !obj[val] ) {
+            obj[val] = [type];    //划重点
+            res.push(val);
+        } else if ( obj[val].indexOf(type) < 0) {
+            obj[val] = [type];
+            res.push(val);
+        }
+    }
+    return res;
+}
+```
+
 ### 第四种方案
 
 > 说明：运用递归，先sort排序，再通过递归splice 删除重复项
+
+**bug说明**，对于纯数字数组可以正常实现，但当数组出现类似 [1,"1",1,2,"2",2,3,"3",3,4,"4",4] 数据结构时，无法正常实现。
 
 ```javascript
 Array.prototype.myUnique = function () {
@@ -101,7 +126,7 @@ Array.prototype.myUnique = function () {
 }
 ```
 
-方案二：
+方案二： 对IE8 等老式浏览器不支持 indexOf 方法做兼容处理
 
 ```javascript
 function unique (array) {
@@ -129,6 +154,20 @@ if ( !Array.prototype.indexOf ){
 }
 ```
 
+### 数组合并并去重
+
+1、concat 方法，说明，先合并数组，再对新合并后得到的数组进行上面的去重操作
+
+2、Array.prototype.push.apply()
+
+```javascript
+function concatArray(arr1, arr2) {
+    Array.prototype.push.apply(arr1, arr2);
+    arr1 = unique(arr1);
+    return arr1;
+}
+```
+
 ## 实现数组排序的几种方法
 
 > 快速排序[quicksort](http://www.ruanyifeng.com/blog/2011/04/quicksort_in_javascript.html)
@@ -149,3 +188,10 @@ var quickSort = function (arr){
     return quickSort(left).concat([pivot], quickSort(right));
 }
 ```
+
+## 参考链接
+
+- [阮一峰先生-快速排序（Quicksort）的Javascript实现](http://www.ruanyifeng.com/blog/2011/04/quicksort_in_javascript.html)
+- [JavaScript十大经典排序算法--CSDN](http://blog.csdn.net/u013063153/article/details/52667542)
+- [js数组去重算法实现](https://zhuanlan.zhihu.com/p/20166261)
+- [JS实现数组去重方法总结(六种方法)](http://www.jb51.net/article/118657.htm)
