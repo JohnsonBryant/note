@@ -2,7 +2,7 @@
 
 ## 实现数组去重的几种方法
 
-### 第一种方案
+### 第一种方案--常用
 
 > 两层循环，外层循环作为基准，内层循环做比较，当内层做完整循环，没有与外层当次循环数组项相同的，则添加该项至result,内层循环一次完整循环内，如果遇到与外层相同的,则外层循环跳过该数组项（通过修改i控制）
 
@@ -19,7 +19,7 @@ Array.prototype.myUnique = function() {
 }
 ```
 
-### 第二种方案
+### 第二种方案--数据较小时适合使用
 
 > 原理说明：利用数组的 splice方法，两次循环，内层遍历到与当前外层循环相同的项时，利用splice删除该项。
 
@@ -45,7 +45,7 @@ Array.prototype.myUnique = function() {
 }
 ```
 
-### 第三种方案
+### 第三种方案--速度快
 
 > 原理：对象的不存在的属性，对应值为undefined，将数组中的项添加为对象属性，通过对象属性，对数组项进行筛除，从而创造出新的不含重复值的数组
 
@@ -85,7 +85,7 @@ Array.prototype.myUnique = function() {
 }
 ```
 
-### 第四种方案
+### 第四种方案--纯数字数组适合使用
 
 > 说明：运用递归，先sort排序，再通过递归splice 删除重复项
 
@@ -170,7 +170,15 @@ function concatArray(arr1, arr2) {
 
 ## 实现数组排序的几种方法
 
-> 快速排序[quicksort](http://www.ruanyifeng.com/blog/2011/04/quicksort_in_javascript.html)
+### 1、快速排序[quicksort](http://www.ruanyifeng.com/blog/2011/04/quicksort_in_javascript.html)
+
+> 算法描述
+
+（1）在数据集之中，选择一个元素作为"基准"（pivot）。
+
+（2）所有小于"基准"的元素，都移到"基准"的左边；所有大于"基准"的元素，都移到"基准"的右边。
+
+（3）对"基准"左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
 
 ```javascript
 var quickSort = function (arr){
@@ -187,6 +195,66 @@ var quickSort = function (arr){
     }
     return quickSort(left).concat([pivot], quickSort(right));
 }
+```
+
+### 2、冒泡排序(bubble Sort)
+
+> 算法描述
+
+<1>.比较相邻的元素。如果第一个比第二个大，就交换它们两个；
+
+<2>.对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样在最后的元素应该会是最大的数；
+
+<3>.针对所有的元素重复以上的步骤，除了最后一个；
+
+<4>.重复步骤1~3，直到排序完成。
+
+```javascript
+function bubbleSort(arr) {
+    var len = arr.length;
+    for (var i = 0; i < len; i++) {
+        for (var j =0; j < len-1-i; j++) {
+            if(arr[j] > arr[j+1]) {   //对比相邻两元素
+                var tmp = arr[j+1];   //元素交换
+                arr[j+1] = arr[j];
+                arr[j] = tmp;
+            }
+        }
+    }
+    return arr;
+}
+```
+
+### 3、选择排序（Selection Sort）
+
+> 算法说明：选择排序，是一种简单直观的排序算法。原理：首先在未排序序列中找到最小（大）元素，存放在排序序列的起始位置，再从剩余未排序元素中找出最小（大）的，放到已排序序列的末尾，以此类推，知道排序完毕。
+
+```javascript
+function selectionSort(arr) {
+    var len = arr.length, minIndex, tmp;
+    console.time("排序耗时")；
+    for (var i = 0; i < len-1; i++){
+        minIndex = i;
+        for (var j = i+1; j< len; j++){
+            if (arr[j] < arr[minIndex]){
+                minIndex = j;
+            }
+        }
+        tmp = arr[i];
+        arr[i] = arr[minIndex];
+        arr[minIndex] = tmp;
+    }
+    console.timeEnd("排序耗时");
+    return arr;
+}
+```
+
+### 4、插入排序 Insertion Sort
+
+> 说明：
+
+```javascript
+
 ```
 
 ## 参考链接
