@@ -1,6 +1,6 @@
 # AJAX
 
-> 通过原生XMLHttpRequest 对象发出HTTP请求，得到服务器返回的数据并进行处理的技术规范。 ajax 可以是同步请求，也可以是异步请求。多为异步，同步Ajax请求对刘篮球有堵塞效应。
+> 通过原生XMLHttpRequest 对象发出HTTP请求，得到服务器返回的数据并进行处理的技术规范。 AJAX 可以是同步请求，也可以是异步请求。多为异步，同步Ajax请求对浏览器有堵塞效应。
 
 具体说，AJAX 包括以下几个步骤：
 
@@ -13,6 +13,10 @@
 
 Ajax 只能向同源网址（协议、域名、端口都相同）发出HTTP请求，跨源请求会报错，[浏览器同源策略及其规避方法](http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html)。
 XMLHttpRequest 可以报送各种数据，且支持其他协议传送（如FTP）
+
+浏览器同源策略相关参考连接
+
+- [浏览器的同源策略--MDN](https://developer.mozilla.org/zh-CN/docs/Web/Security/Same-origin_policy)
 
 ## XMLHttpRequest 对象
 
@@ -203,6 +207,113 @@ ajax.send(data);
 ```
 
 注意：所有的XMLHttpRequest的监听事件，都必须在send()方法调用之前设定。
+
+send 方法的参数就是发送的数据。多种格式的数据都可以作为参数。
+
+**FormData**类型可以用于构造表单数据
+
+```javascript
+//下面代码构造一个FormData对象，然后使用send()方法发送，效果与点击表单的submit按钮是一样的
+var formData = new FormData();
+formData.append('username', '张三');
+formData.append('email', 'zhangsan@example.com');
+formData.append('birthDate', 1940);
+var xhr = new XMLHttpRequest();
+xhr.open('POST', '/register', true);
+xhr.send(formData);
+```
+
+FormData 将现有表单构造生成
+
+```javascript
+var formElement = document.querySelector('form');
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'submitfomr.php');
+xhr.send(new FormData(formElement));
+```
+
+FormData 对象对现有表单添加数据，为表单操作提供更多灵活性
+
+```javascript
+function sendForm(form) {
+    var fromData = new FormData(form);
+    formData.append('csrf', 'e69a18d7db1286040586e6da1950128c');
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action, true);
+    xhr.onload = function (e) {
+        //...
+    }
+    xhr.send(formData);
+    return false;
+}
+var form = document.querySelector('#registration');
+sendForm(form);
+```
+
+### 3、6 setRequestHeader()
+
+> 设置HTTP头信息。必须自open方法之后，send方法之前调用。
+
+```javascript
+xhr.setRequestHeader('Content-Type', 'application/json');
+xhr.send(JSON.stringify(data));
+```
+
+### 3、7 overrideMimeType()
+
+> 指定服务器返回数据的MIME类型。必须在send()方法之前调用。
+
+## 4、XMLHttpRequest 实例的事件
+
+### 4、1 readyStateChange 事件
+
+readyState 属性的值发生改变，就会触发readyStateChange 事件。
+
+通过 onReadyStateChange 属性，指定这个事件的回调函数，对不同的状态进行处理。当状态变为4的时候，表示通信成功，这时回调函数可以处理服务器传回的数据。
+
+### 4、2 progress 事件
+
+上传文件时，XMLHttpRequest 对象的upload属性有一个progress,会不断返回上传的进度。
+
+假定网页上有一个progress元素。文件上传时，对upload属性指定progress事件回调函数，即可获得上传进度。
+
+```javascript
+<progress min="0" max="100" value="0">0% complete</progress>
+
+function upload(blobOrFile) {
+    var xhr = new XMLHttpReques();
+    xhr.open('POST', 'http://localhost/page.php', true);
+    xhr.onload = function(e) {};
+    var progressBar = document.querySelector('progress');
+    xhr.upload.onprogress = function(e) {
+        if (e.lengthComputable) {
+            progressBar.value = (e.loaded / e.total) * 100;
+            progressBar.textContent = progressBar.value;
+        }
+    }
+    xhr.send(blobOrFile);
+}
+
+upload(new Blob(['hello world'], {type: 'text/plain'}))
+```
+
+### 4、3 load事件、error事件、abort事件，loadend 事件
+
+load事件表示服务器传来的数据接收完毕；error事件表示请求错误；abort表示请求被中断。
+
+```javascript
+var xhr = new XMLHttpRequest();
+xhr.addEventListener('progress', updateProgress);
+xhr.addEventListener('load', updateProgress);
+xhr.addEventListener('error', updateProgress);
+xhr.addEventListener('abort', updateProgress);
+//abort、load、error三个事件，会伴随一个loadend事件，表示请求结束，但不确定是否成功。
+xhr.addEventListener('loadend', updateProgress);
+```
+
+## 文件上传--AJAX
+
+> 使用file控件；使用XMLHttpRequest对象实例方法，上传文件。
 
 ## 参考
 
