@@ -50,7 +50,7 @@ Array.prototype.myUnique = function() {
 > 原理：对象的不存在的属性，对应值为undefined，将数组中的项添加为对象属性，通过对象属性，对数组项进行筛除，从而创造出新的不含重复值的数组
 
 优点：执行速度快；  缺点：占用内存较多
-**注意** 存在缺陷，判断是否为js对象的键时，会自动对传入的键执行toStirng()，不同的键可能会被误认为一样，如 obj[1] 和 obj["1"]
+**注意** 存在缺陷，判断是否为js对象的键时，对象所有的键都是字符串，可以省略 " " ，会自动对传入的键执行toStirng()，不同的键可能会被误认为一样，如 obj[1] 和 obj["1"]
 
 ```javascript
 //无法判断 1 和 "1" 的区别，会认为是重复项，忽略后出现的
@@ -68,6 +68,7 @@ Array.prototype.myUnique = function() {
 
 ```javascript
 //处理了js对象在判断键时，会自动对传入的键进行toString()操作，避免出现错误判断 1 和 "1" 的问题
+//使用了数组的 indexOf() 方法，兼容性问题（IE8及以下）
 Array.prototype.myUnique = function() {
     var obj = {}, res = [], len = this.length, type, val;
     for (var i = 0; i < len; i++){
@@ -112,7 +113,7 @@ Array.prototype.myUnique = function () {
 
 ### 第五种方案
 
-> 说明：利用ES6 新增方法 indexOf
+> 说明：利用ES6 新增数组方法 indexOf()
 
 方案一：
 
@@ -168,7 +169,7 @@ function concatArray(arr1, arr2) {
 }
 ```
 
-## 实现数组排序的几种方法
+## 实现数组排序的算法
 
 ### 1、快速排序[quicksort](http://www.ruanyifeng.com/blog/2011/04/quicksort_in_javascript.html)
 
@@ -182,18 +183,45 @@ function concatArray(arr1, arr2) {
 
 ```javascript
 var quickSort = function (arr){
-    if(arr.length <= 1){ return arr; }
-    var pivotIndex = Math.floor(arr.length / 2);
-    var pivot = arr.splice(pivotIndex, 1)[0];
-    var left = [], right = [];
+    //克隆参数数组，达到不修改原数组的目的
+    var tmpArr = [];
     for(var i = 0; i < arr.length; i++){
-        if (arr[i] < pivot){
-            left.push(arr[i]);
+        tmpArr.push(arr[i]);
+    }
+
+    if(tmpArr.length <= 1){ return tmpArr; }
+    var pivotIndex = Math.floor(tmpArr.length / 2);
+    var pivot = tmpArr.splice(pivotIndex, 1)[0];
+    var left = [], right = [];
+    for(var i = 0; i < tmpArr.length; i++){
+        if (tmpArr[i] < pivot){
+            left.push(tmpArr[i]);
         } else {
-            right.push(arr[i]);
+            right.push(tmpArr[i]);
         }
     }
     return quickSort(left).concat([pivot], quickSort(right));
+}
+//拓展数组对象原型方法
+Array.prototype.quickScort = function(arr) {
+    var tmpArr = [];
+    for(var i = 0; i < arr.length; i++){
+        tmpArr.push(arr[i]);
+    }
+    var len = tmpArr.length;
+
+    if(len <= 1) { return tmpArr};
+    var pivotIndex = Math.floor(len / 2);
+    var pivot = tmpArr.splice(pivotIndex, 1)[0];
+    var left = [], right = [];
+    for(var i = 0; i < len-1; i++) {
+        if (tmpArr[i] < pivot) {
+            left.push(tmpArr[i]);
+        } else {
+            right.push(tmpArr[i]);
+        }
+    }
+    return Array.prototype.quickScort(left).concat([pivot], Array.prototype.quickScort(right))
 }
 ```
 
@@ -232,7 +260,7 @@ function bubbleSort(arr) {
 ```javascript
 function selectionSort(arr) {
     var len = arr.length, minIndex, tmp;
-    console.time("排序耗时")；
+    console.time("排序耗时");
     for (var i = 0; i < len-1; i++){
         minIndex = i;
         for (var j = i+1; j< len; j++){
