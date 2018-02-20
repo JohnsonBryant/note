@@ -138,6 +138,22 @@ function debounce(fn, delay){
 
 > 运行机制：将制定的代码移出本次执行，等到下一轮Event Loop 时，再检查是否到了指定时间，如果到了，就执行对应代码，如果不到，就等待下一轮Event Loop 时重新判断。
 
+意味着，setTimeout 和 setInterval 指定的代码，必须等到本轮Event Loop 的所有任务都执行完，才会开始执行。所以setTimeout 和 setInterval 指定的任务，无法确定会按照预定的时间执行。
+
+## 5、setTimeout(f, 0)
+
+### 5、1 含义
+
+setTimeout的真正作用是，在“消息队列”的现有消息的后面再添加一个消息，规定在指定时间执行某段代码。setTimeout添加的事件，会在下一次Event Loop执行。
+
+setTimeout(f, 0)将第二个参数设为0，作用是让f在现有的任务（脚本的同步任务和“消息队列”指定的任务）一结束就立刻执行。也就是说，setTimeout(f, 0)的作用是，尽可能早地执行指定的任务。而并不是会立刻就执行这个任务。
+
+即使消息队列是空的，0毫秒实际上也是达不到的。根据HTML 5标准，setTimeout推迟执行的时间，最少是4毫秒。
+
+### 5、2 应用 - 调整事件发生顺序
+
+## 6、正常任务与微任务
+
 ## 参考链接
 
 - [阮一峰 - 定时器-JavaScript标准参考教程](http://javascript.ruanyifeng.com/advanced/timer.html)
