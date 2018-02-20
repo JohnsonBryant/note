@@ -181,13 +181,11 @@ function concatArray(arr1, arr2) {
 
 （3）对"基准"左边和右边的两个子集，不断重复第一步和第二步，直到所有子集只剩下一个元素为止。
 
+  注意：slice方法拷贝数组，运行效率比使用循环拷贝高很多。
+
 ```javascript
 var quickSort = function (arr){
-    //克隆参数数组，达到不修改原数组的目的
-    var tmpArr = [];
-    for(var i = 0; i < arr.length; i++){
-        tmpArr.push(arr[i]);
-    }
+    var tmpArr = arr.slice();   //返回参数数组的拷贝，达到不修改原数组的目的
 
     if(tmpArr.length <= 1){ return tmpArr; }
     var pivotIndex = Math.floor(tmpArr.length / 2);
@@ -204,11 +202,7 @@ var quickSort = function (arr){
 }
 //拓展数组对象原型方法
 Array.prototype.quickScort = function(arr) {
-    var tmpArr = [];
-    for(var i = 0; i < arr.length; i++){
-        tmpArr.push(arr[i]);
-    }
-    var len = tmpArr.length;
+    var tmpArr = arr.slice(), len = tmpArr.length;
 
     if(len <= 1) { return tmpArr};
     var pivotIndex = Math.floor(len / 2);
