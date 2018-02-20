@@ -1,15 +1,13 @@
 # 工作日历
 
-  vue官方组件
+  vue官方组件 -- 重点
   git版本控制
   es6 语法学习
-  node 学习 express框架
   求职途径的维护与发掘
 
-## 项目准备
+## 工作记录
 
-react.js 项目
-node.js 项目
+  阮一峰-JavaScript教程--正则表达式
 
 ## 事件委托
 

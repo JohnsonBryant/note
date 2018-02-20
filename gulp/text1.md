@@ -1,15 +1,20 @@
-# gulp学习笔记第一篇章 #
+# gulp学习笔记第一篇章
+
 > 简介
 
-## 相关链接 ##
+## 相关链接
+
 [Gulp 中文网](https://www.gulpjs.com.cn/docs/api/)
-## cssmin 文件输出注意 ##
+
+## cssmin 文件输出注意
+
 > css文件压缩
 
 [minify css using gulp](https://www.npmjs.com/package/gulp-cssmin)
 
 npm install --save-dev gulp-cssmin
-```
+
+```javascript
 // example gulpfile.js
 var gulp = require('gulp');
 var cssmin = require('gulp-cssmin');
@@ -21,8 +26,10 @@ gulp.task('default', function(){
 		.pipe(gulp.dest('dist'))
 })
 ```
+
 - 目标输出文件夹中已有同名文件时，文件会被替换，而不是合并。**文件输出时，务必注意**
 
-## js 文件压缩 ##
+## js 文件压缩
+
 > gulp-minify
 
