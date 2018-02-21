@@ -16,7 +16,7 @@ String.prototype.toString()
 
 String.prototype.length  返回字符串长度
 
-String.prototype.charAt(index)  返回指定位置的字符串，索引从0开始  
+String.prototype.charAt(index)  返回指定位置的字符串，索引从0开始
 
 String.prototype.charCodeAt()  返回字符串指定位置字符的Unicode 码点
 
@@ -24,7 +24,7 @@ String.prototype.slice(start, end)  切取字符串的指定部分并返回，�
 
 String.prototype.substring()  效果类似slice，优先使用slice
 
-String.prototype.substr(start, len)  从原字符串去除子字符串并返回
+String.prototype.substr(start, len)  从原字符串取出子字符串并返回
 
 String.prototype.trim()  去除字符串两端空白，并返回新字符串，不改变原字符串
 
