@@ -1,6 +1,82 @@
 # 图片上传相关API
 
-## FileReader
+## FromData 对象
+
+- [通过AJAX提交表单和上传文件可以不使用FormData对象](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Submitting_forms_and_uploading_files) ，后续学习。
+
+> XMLHttpRequest Level2 实现的API。利用FormData 对象可以模拟一系列表单控件，FormData 对象可以结合AJAX 技术实现二进制数据的异步上传。
+
+使用：
+
+FormData 手动构造表单数据，用于AJAX 异步提交
+
+```javascript
+//下面代码手动构造一个 formData 对象，然后通过 XMLHttpRequest.send(formData) 方法提交数据。效果与点击form表单的submit 按钮一样。
+var formData = new FormData();
+formData.append('username', 'John');
+formData.append('email', 'john@gmail.com');
+formData.append('age', 25);
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'example.php');
+xhr.send(formData);
+```
+
+FormData 对象实现现有表单的构造生成
+
+```javascript
+// 通过 FormData 对象实现现有表单的构造生成
+var formElement = document.querySelector('form');
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'example.php');
+xhr.send(new FromData(formElement));
+
+//可以通过FormData 向现有表单自定义添加数据
+var formData = new FormData(document.querySelector('form'));
+formData.append('example', '新增的数据');
+xhr.send(formData);
+```
+
+FormData 对象模拟 file 表单控件，进行文件上传
+
+```javascript
+//下面代码封装函数，可以实现表单控件文件选中之后的立即上传，不需要再通过点击上传按钮控制。
+function uploaderFiles(url, files){
+  var formData = new FormData();
+  for (var i = 0, len = files.length; i++){
+    formData.append(files[i].name, files[i]); //可加入第三个参数
+  }
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', url, true);
+  xhr.onload = function() {
+    //
+  };
+  xhr.send(formData); //multiaprt/form-data
+}
+
+document.querySelector('input[type="file"]').addEventListener('change', function(e){
+  uploaderFiles('example.php', this.files);
+}, false)
+```
+
+- 构造函数:
+  ```javascript
+  //使用构造函数生成FormData 对象实例，参数可选，HTML表单元素，可以包含任意形式的表单控件，实现表单数据的构造生成。
+  var formData = new FormData([form]);
+  ```
+方法：
+
+```javascript
+//向当前FormData 对象中添加数据
+//参数name:字段的name值； value：字段值 ； filename：（可选），指定文件的文件名，当value参数被指定为Blob 或 File 对象时，该文件名会被自动发送到服务器。
+void FormData.append(name, value [, filename])
+
+//从当前FormData 对象中删除指定数据，参数 name 指定要删除的 key 的名字
+void FormData.delete(name)  //从FormData 对象中删除指定key 和 它对应的 value值
+```
+
+兼容性： IE10+
+
+## FileReader 对象
 
 > 简介：读取文件内容。可读取存储在计算机的文件（或原始数据缓冲区）的内容，使用 File 或 Blob 对象，指定要读取的文件或数据。
 
@@ -99,9 +175,9 @@ File 对象的类型是 Blob。可用在任意的 Blob 类型的Context 中。�
 
 ## 参考链接
 
+- [阮一峰 - AJAX - JavaScript标准教程](http://javascript.ruanyifeng.com/bom/ajax.html)
 - [FileList - MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/FileList)
 - [File - MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/File)
-- []()
-- []()
+- [FormData 对象的使用 - MDN](https://developer.mozilla.org/zh-CN/docs/Web/API/FormData/Using_FormData_Objects)
 - []()
 - []()
