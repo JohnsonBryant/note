@@ -69,7 +69,7 @@ xml 文档的 documentElement 属性是根节点
   - `tagName` : 返回元素的名称
   - `nodeValue` : `null`
 - **方法**
-  - `appendChild(node)` : 把在节点的子节点末尾添加新的节点
+  - `appendChild(node)` : 把在节点的子节点末尾添加新的节点，只接受节点作为参数，不接受字符串参数（需要先转换为节点对象 DOMParser）。
   - `insertBefore(new_node, existing_node)` : 在已有子节点前插入新的子节点
   - `hasChildNodes(node)` : 返回布尔值，判断元素是否拥有子节点
   - `removeChild(node)` : 删除子节点
