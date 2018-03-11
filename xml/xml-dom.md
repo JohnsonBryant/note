@@ -62,6 +62,9 @@ xml 文档的 documentElement 属性是根节点
   - `createAttribute(name)` : 创建带有指定属性名的节点，返回节点对象
   - `createElement()` : 创建新的元素节点
   - `createTextNode()` ： 创建新的文本节点
+  - `getElementById(id)` : 返回带有指定id 的元素节点，不存在返回null
+  - `getElementsByTagName(name)` : 参数为元素名(name 或 h:name)，当元素添加了命名空间时，查找元素必须带上命名空间。
+  - `getElementsByTagNameNS(ns, name)` : Chrome浏览器下测试，不能正常选中元素节点。使用 `getElementsByTagName` 方法代替
 
  #元素节点 对象
 - **属性**
