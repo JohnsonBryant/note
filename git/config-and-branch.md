@@ -59,11 +59,7 @@ git config --global user.eamil user@mail.com
 
 ```javascript
 Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容
-<<<<<<< HEAD
 Creating a new branch is quick & simple.
-=======
-Creating a new branch is quick AND simple.
->>>>>>> feature1
 ```
 
 - **分支管理策略**
