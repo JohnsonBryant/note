@@ -3,12 +3,32 @@
 ## 通信
 
   #自动获取本机COM信息、IPAddress信息
+
+```C#
+//获取本机IPAddress地址
+public IPAddress[] GetIpAddress(){
+  System.Net.IPHostEntry host;
+  host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+  return host.AddressList;
+}
+
+//获取本机串口 COM列表
+public string][] GetSerialPort(){
+  string[] PortName = System.IO.Ports.SerialPort.GetPortName();
+  return PortName;
+}
+```
+
   #串口通信
   #UDP通信
   #TCP通信
   #数据接收处理
 
 ## 多线程编程
+
+## 测试
+
+## 调试Debug
 
 ## this.Invoke
 
@@ -30,6 +50,10 @@ List<Dictionary<String,Object>> 数据类型
 
 ## 字符串的语法
 
+* 模版字符串 `$"this is string {variable} with variable."`
+* 普通字符串 `""` ，反斜杠需要转义处理
+* 绝对字符串 `@"D:\work\demo\Demo\NetExpert\bin\Debug"`，反斜杠不需要转义处理
+
 ```c#
   @"this is string."; $"this is {variable} string."; "this is string.";
 ```
@@ -40,11 +64,29 @@ List<Dictionary<String,Object>> 数据类型
   System.Environment.NewLine
 ```
 
-## 生成文件夹、文件
+C# 中字符串string和字节数组byte[]的转换
+string转byte[]:
+
+byte[] byteArray = System.Text.Encoding.Default.GetBytes ( str );
+byte[]转string：
+
+string str = System.Text.Encoding.Default.GetString ( byteArray );
+string转ASCII byte[]:
+
+byte[] byteArray = System.Text.Encoding.ASCII.GetBytes ( str );
+ASCII byte[]转string:
+
+string str = System.Text.Encoding.ASCII.GetString ( byteArray );
+
+## 输入输出
+
+  #生成文件夹、文件
 
 ```c#
+//生成文件夹
 System.IO.Directory.CreateDirectory(stringPath);
 bool System.IO.Directory.Exists(stringPath);
 
+//生成文件
 FileStream fs = new FileStream(stringPath, System.IO.FileMode.Create);
 ```
