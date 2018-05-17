@@ -64,19 +64,30 @@ List<Dictionary<String,Object>> 数据类型
   System.Environment.NewLine
 ```
 
-C# 中字符串string和字节数组byte[]的转换
-string转byte[]:
+  C# 中字符串string和字节数组byte[]的转换：**注意函数方法的重载，存在多种不同的情况**
 
+```C#
+// string转byte[]:
 byte[] byteArray = System.Text.Encoding.Default.GetBytes ( str );
-byte[]转string：
-
+// byte[]转string：
 string str = System.Text.Encoding.Default.GetString ( byteArray );
-string转ASCII byte[]:
-
+// string转ASCII byte[]:
 byte[] byteArray = System.Text.Encoding.ASCII.GetBytes ( str );
-ASCII byte[]转string:
-
+// ASCII byte[]转string:
 string str = System.Text.Encoding.ASCII.GetString ( byteArray );
+//字节数组转16进制字符串，字节数组必须符合十六进制字节的标准，否则运行方法时会出错。
+string str = System.BitConverter.ToString(bytesArray);
+```
+
+  #数字、字符串进制转换
+
+```C#
+"十进制166的二进制表示: " + Convert.ToString(166, 2);
+"十进制166的八进制表示: " + Convert.ToString(166, 8);
+"十进制166的十六进制表示: " + Convert.ToString(166, 16);
+"八进制 44 的十进制表示: " + Convert.ToInt32("44", 8);
+"十六进制 CC的十进制表示: " + Convert.ToInt32("CC", 16);
+```
 
 ## 输入输出
 
